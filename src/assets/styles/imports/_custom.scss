@@ -27,3 +27,21 @@ td>i{
   font-size: 20px !important;
   margin: 0 4px
 }
+
+ngb-tabset .nav > li > a {
+  color: #1ab394 !important;
+}
+
+ngb-tabset .nav > li > a:hover {
+  color: #1ab394 !important;
+  background-color: #b1cfc9 !important;;
+}
+ngb-tabset .nav > li > a.active,ngb-tabset .nav > li > a.active:hover {
+  background-color: #1ab394;
+  color: #fff !important;
+}
+
+.tabs-container .nav-tabs {
+  border-bottom: 1px solid #1ab394;
+  margin-bottom: 1em;
+}
