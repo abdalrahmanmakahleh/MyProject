@@ -1,0 +1,29 @@
+/* Only demo */
+@media (max-width: 1000px) {
+  .welcome-message {
+    display: none;
+  }
+}
+
+.form-control{
+  border-radius: 3px;
+
+}
+.form-control.ng-invalid.ng-dirty:focus {
+  box-shadow: 0 0 5px 0.2px #F44336;
+  border: none;
+
+}
+
+.form-control.ng-invalid.ng-touched {
+  box-shadow: 0 0 5px 0.2px #F44336;
+  border: none;
+}
+.help-block {
+ color: #fd928b;
+}
+
+td>i{
+  font-size: 20px !important;
+  margin: 0 4px
+}

@@ -1,0 +1,142 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-10">
+        <!-- <h2>{{formControls.Name}}</h2> -->
+        <h2>Start</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li>
+                <a ui-sref="pages.forms">Contracts</a>
+            </li>
+            <li class="active">
+                <!-- <strong>{{formControls.Name}}</strong> -->
+            </li>
+        </ol>
+    </div>
+    <div class="col-sm-2">
+        <div class="title-action">
+            <!-- <a ui-sref="pages.edit-form({id:formControls.id})" class="btn btn-primary">Edit This form</a> -->
+        </div>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-md-10">
+
+            <div class="tabs-container">
+                <div class="panel-body">
+
+
+                    <form #form="ngForm" (ngSubmit)="save(form)">
+                        <div class="row">
+
+                            <div class="form-group col-md-3">
+                                <label for="Name">Name</label>
+                                <input name="Name" type="text" class="form-control" ngModel required>
+                                <span class="help-block" *ngIf="form.controls.Name&&form.controls.Name.invalid &&( form.controls.Name.touched|| form.controls.Name.dirty||form.submitted)">required</span>
+                            </div>
+
+
+                            <div class="form-group col-md-3">
+                                <label for="Name2">Name 2</label>
+                                <input name="Name2" type="text" class="form-control" [ngModel]="Name2">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="Nationality">Nationality</label>
+                                <input name="Nationality" type="text" class="form-control" [ngModel]="Nationality">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="ST_CUR_COD">Currency Code</label>
+                                <input name="ST_CUR_COD" type="text" class="form-control" [ngModel]="ST_CUR_COD">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="Refernce_No">Reference No</label>
+                                <input name="Refernce_No" type="text" class="form-control" [ngModel]="Refernce_No">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="Loc_Status">Loc_Status</label>
+                                <select name="Loc_Status" class="form-control" [ngModel]="Loc_Status" required>
+                                    <option value="">select</option>
+                                    <option value="4">1</option>
+                                </select>
+                                <span class="help-block" *ngIf="form.controls.Loc_Status&&form.controls.Loc_Status.invalid &&( form.controls.Loc_Status.touched|| form.controls.Loc_Status.dirty||form.submitted)">required</span>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="Phone_Code">Phone Code</label>
+                                <input name="Phone_Code" type="text" class="form-control" [ngModel]="Phone_Code">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="countryFlag">Country Flag</label>
+                                <input name="countryFlag" type="file" class="form-control" ng2FileSelect [uploader]="uploader">
+
+
+
+
+                            </div>
+                        </div>
+
+
+                        <input class="btn btn-primary pull-right" type="submit" value="Save" required />
+
+                    </form>
+
+
+
+
+                    <table class="table table-stripped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name </th>
+                                <th>Name2 </th>
+                                <th>Nationality </th>
+                                <th>Currency code</th>
+                                <th>Phone code</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of countries">
+                                <td>{{data.Id}}</td>
+                                <td>{{data.Name}}</td>
+                                <td>{{data.Name2}}</td>
+                                <td>{{data.Nationality}}</td>
+                                <td>{{data.ST_CUR_COD}}</td>
+                                <td>{{data.Phone_Code}}</td>
+                                <td>
+                                    <i (click)="updateCountry(data)" class="fa fa-edit"></i>
+                                    <i (click)="deleteCountry(data.Id)" class="fa fa-remove"></i>
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td *ngIf="countries.length === 0" colspan="10">No Data</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="text-center">
+                <div style="margin-top: 20px">
+                    <i class="fa fa-plus" style="font-size: 180px;color: #f7f7f7 "></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
