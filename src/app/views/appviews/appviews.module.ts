@@ -11,6 +11,8 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { MatTableModule, MatPaginatorModule, MatTabsModule, MatInputModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,12 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     BrowserModule,
     DataTablesModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatTabsModule,
+    MatInputModule
   ],
   exports: [
     StarterViewComponent,
