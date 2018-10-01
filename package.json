@@ -22,6 +22,7 @@
     "@angular/router": "^6.1.0",
     "@ng-bootstrap/ng-bootstrap": "^3.2.2",
     "angular-datatables": "^6.0.0",
+    "angular-datatables-5": "^5.1.2",
     "animate.css": "^3.7.0",
     "bootstrap": "^3.3.7",
     "core-js": "^2.5.4",
