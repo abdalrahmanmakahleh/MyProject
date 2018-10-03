@@ -13,6 +13,8 @@ import { DataTablesModule } from 'angular-datatables';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatTableModule, MatPaginatorModule, MatTabsModule, MatInputModule } from '@angular/material';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +36,10 @@ import { MatTableModule, MatPaginatorModule, MatTabsModule, MatInputModule } fro
     MatTableModule,
     MatPaginatorModule,
     MatTabsModule,
-    MatInputModule
+    MatInputModule,
+    ConfirmationPopoverModule.forRoot({
+      confirmButtonType: 'danger' // set defaults here
+    })
   ],
   exports: [
     StarterViewComponent,

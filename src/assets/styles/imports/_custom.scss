@@ -53,3 +53,20 @@ ngb-tabset .nav > li > a.active,ngb-tabset .nav > li > a.active:hover {
 table {
   width: 100%;
 }
+
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  height: 100%;
+}
+
+
+
+.mat-tab-label-active {
+  z-index: 100;
+  color: #fff;
+  opacity: 1 !important;
+}
+
+
+td.mat-cell.cdk-column-actions.mat-column-actions{
+  text-align: right;
+}

@@ -7,7 +7,7 @@
                 <a href="index.html">Home</a>
             </li>
             <li>
-                <a ui-sref="pages.forms">Contracts</a>
+                <a>Organaizations</a>
             </li>
             <li class="active">
                 <!-- <strong>{{formControls.Name}}</strong> -->
@@ -33,192 +33,64 @@
                         <legend>
                             Countries
                         </legend>
-                        <form #form="ngForm" (ngSubmit)="save(form)">
+                        <form #form="ngForm" (ngSubmit)="saveCountry(form)">
                             <div class="row">
-
                                 <div class="form-group col-md-3">
                                     <label for="Name">Name</label>
-                                    <input name="Name" type="text" class="form-control" [ngModel]="Name" required>
+                                    <input name="Name" type="text" class="form-control" [ngModel]="countryForm.Name"
+                                        required>
                                     <span class="help-block" *ngIf="form.controls.Name&&form.controls.Name.invalid &&( form.controls.Name.touched|| form.controls.Name.dirty||form.submitted)">required</span>
                                 </div>
-
-
                                 <div class="form-group col-md-3">
                                     <label for="Name2">Name 2</label>
-                                    <input name="Name2" type="text" class="form-control" [ngModel]="Name2">
+                                    <input name="Name2" type="text" class="form-control" [ngModel]="countryForm.Name2">
                                 </div>
-
                                 <div class="form-group col-md-3">
                                     <label for="Nationality">Nationality</label>
-                                    <input name="Nationality" type="text" class="form-control" [ngModel]="Nationality">
+                                    <input name="Nationality" type="text" class="form-control" [ngModel]="countryForm.Nationality">
                                 </div>
-
                                 <div class="form-group col-md-3">
                                     <label for="ST_CUR_COD">Currency Code</label>
-                                    <input name="ST_CUR_COD" type="text" class="form-control" [ngModel]="ST_CUR_COD">
+                                    <input name="ST_CUR_COD" type="text" class="form-control" [ngModel]="countryForm.ST_CUR_COD">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <label for="Refernce_No">Reference No</label>
-                                    <input name="Refernce_No" type="text" class="form-control" [ngModel]="Refernce_No">
+                                    <input name="Refernce_No" type="text" class="form-control" [ngModel]="countryForm.Refernce_No">
                                 </div>
-
                                 <div class="form-group col-md-3">
-                                    <label for="Loc_Status">Loc_Status</label>
-                                    <select name="Loc_Status" class="form-control" [ngModel]="Loc_Status" required>
-                                        <option value="">select</option>
-                                        <option value="4">1</option>
+                                    <label for="Loc_Status">Status</label>
+                                    <select name="Loc_Status" class="form-control" [ngModel]="countryForm.Loc_Status"
+                                        required>
+                                        <option *ngFor="let status of LockUps" [ngValue]="status.Major_Code">{{status.Name}}</option>
                                     </select>
                                     <span class="help-block" *ngIf="form.controls.Loc_Status&&form.controls.Loc_Status.invalid &&( form.controls.Loc_Status.touched|| form.controls.Loc_Status.dirty||form.submitted)">required</span>
                                 </div>
-
                                 <div class="form-group col-md-3">
                                     <label for="Phone_Code">Phone Code</label>
-                                    <input name="Phone_Code" type="text" class="form-control" [ngModel]="Phone_Code">
+                                    <input name="Phone_Code" type="text" class="form-control" [ngModel]="countryForm.Phone_Code">
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <label for="countryFlag">Country Flag</label>
                                     <input name="countryFlag" type="file" class="form-control" ng2FileSelect [uploader]="uploader">
                                 </div>
+                                <div class="col-md-7 text-right">
+                                    <br>
+                                    <br>
+                                    <input class="btn btn-primary " type="submit" value="Save" />
+                                </div>
                             </div>
-
-
-                            <input class="btn btn-primary pull-right" type="submit" value="Save" required />
-
                         </form>
                     </fieldset>
 
-                    <fieldset *ngIf="extraForm==='city'">
-                        <legend>
-                            City
-                        </legend>
-                        <form #form="ngForm" (ngSubmit)="save(form)">
-                            <div class="row">
-
-                                <div class="form-group col-md-3">
-                                    <label for="Name">Name</label>
-                                    <input name="Name" type="text" class="form-control" [ngModel]="Name" required>
-                                    <span class="help-block" *ngIf="form.controls.Name&&form.controls.Name.invalid &&( form.controls.Name.touched|| form.controls.Name.dirty||form.submitted)">required</span>
-                                </div>
 
 
-                                <div class="form-group col-md-3">
-                                    <label for="Name2">Name 2</label>
-                                    <input name="Name2" type="text" class="form-control" [ngModel]="Name2">
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="Nationality">Nationality</label>
-                                    <input name="Nationality" type="text" class="form-control" [ngModel]="Nationality">
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="ST_CUR_COD">Currency Code</label>
-                                    <input name="ST_CUR_COD" type="text" class="form-control" [ngModel]="ST_CUR_COD">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-3">
-                                    <label for="Refernce_No">Reference No</label>
-                                    <input name="Refernce_No" type="text" class="form-control" [ngModel]="Refernce_No">
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="Loc_Status">Loc_Status</label>
-                                    <select name="Loc_Status" class="form-control" [ngModel]="Loc_Status" required>
-                                        <option value="">select</option>
-                                        <option value="4">1</option>
-                                    </select>
-                                    <span class="help-block" *ngIf="form.controls.Loc_Status&&form.controls.Loc_Status.invalid &&( form.controls.Loc_Status.touched|| form.controls.Loc_Status.dirty||form.submitted)">required</span>
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="Phone_Code">Phone Code</label>
-                                    <input name="Phone_Code" type="text" class="form-control" [ngModel]="Phone_Code">
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="form-group col-md-4">
-                                    <label for="countryFlag">Country Flag</label>
-                                    <input name="countryFlag" type="file" class="form-control" ng2FileSelect [uploader]="uploader">
-                                </div>
-                            </div>
-
-
-                            <input class="btn btn-primary pull-right" type="submit" value="Save" required />
-
-                        </form>
-                    </fieldset>
-                    <fieldset *ngIf="extraForm==='area'">
-                        <legend>
-                            Area
-                        </legend>
-                        <form #form="ngForm" (ngSubmit)="save(form)">
-                            <div class="row">
-
-                                <div class="form-group col-md-3">
-                                    <label for="Name">Name</label>
-                                    <input name="Name" type="text" class="form-control" [ngModel]="Name" required>
-                                    <span class="help-block" *ngIf="form.controls.Name&&form.controls.Name.invalid &&( form.controls.Name.touched|| form.controls.Name.dirty||form.submitted)">required</span>
-                                </div>
-
-
-                                <div class="form-group col-md-3">
-                                    <label for="Name2">Name 2</label>
-                                    <input name="Name2" type="text" class="form-control" [ngModel]="Name2">
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="Nationality">Nationality</label>
-                                    <input name="Nationality" type="text" class="form-control" [ngModel]="Nationality">
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="ST_CUR_COD">Currency Code</label>
-                                    <input name="ST_CUR_COD" type="text" class="form-control" [ngModel]="ST_CUR_COD">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-3">
-                                    <label for="Refernce_No">Reference No</label>
-                                    <input name="Refernce_No" type="text" class="form-control" [ngModel]="Refernce_No">
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="Loc_Status">Loc_Status</label>
-                                    <select name="Loc_Status" class="form-control" [ngModel]="Loc_Status" required>
-                                        <option value="">select</option>
-                                        <option value="4">1</option>
-                                    </select>
-                                    <span class="help-block" *ngIf="form.controls.Loc_Status&&form.controls.Loc_Status.invalid &&( form.controls.Loc_Status.touched|| form.controls.Loc_Status.dirty||form.submitted)">required</span>
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="Phone_Code">Phone Code</label>
-                                    <input name="Phone_Code" type="text" class="form-control" [ngModel]="Phone_Code">
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="form-group col-md-4">
-                                    <label for="countryFlag">Country Flag</label>
-                                    <input name="countryFlag" type="file" class="form-control" ng2FileSelect [uploader]="uploader">
-                                </div>
-                            </div>
-
-
-                            <input class="btn btn-primary pull-right" type="submit" value="Save" required />
-
-                        </form>
-                    </fieldset>
                     <br>
 
-                    <mat-tab-group (selectedTabChange)="showCityForm($event)">
+                    <mat-tab-group (selectedTabChange)="showCityAreaForm($event)">
                         <mat-tab label="Countries">
                             <div class="html5buttons">
                                 <div class="dt-buttons btn-group"><a class="btn btn-default buttons-copy buttons-html5"><span>Copy</span></a><a
@@ -248,9 +120,10 @@
                                         <td>{{data.ST_CUR_COD}}</td>
                                         <td>{{data.Phone_Code}}</td>
                                         <td>
-                                            <i (click)="updateCountry(form,data)" class="fa fa-edit" placement="left"
+                                            <i (click)="updateCountry(data)" class="fa fa-edit" placement="left"
                                                 ngbTooltip="Edit"></i>
-                                            <i (click)="deleteCountry(data.Id)" class="fa fa-remove" placement="left"
+                                            <i class="fa fa-remove" mwlConfirmationPopover [popoverTitle]="'Confirm'"
+                                                [popoverMessage]="'are you sure to delete?'" placement="left" (confirm)="deleteCountry(element.Id)"
                                                 ngbTooltip="Delete"></i>
                                         </td>
                                     </tr>
@@ -259,6 +132,55 @@
                             </table>
                         </mat-tab>
                         <mat-tab label="Cities">
+
+                            <fieldset *ngIf="extraForm==='city'" class="animated fadeInDown">
+                                <legend>
+                                    City
+                                </legend>
+                                <form #form="ngForm" (ngSubmit)="saveCity(form)">
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <label for="Name">Name</label>
+                                            <input name="Name" type="text" class="form-control" [ngModel]="cityForm.Name"
+                                                required>
+                                            <span class="help-block" *ngIf="form.controls.Name&&form.controls.Name.invalid &&( form.controls.Name.touched|| form.controls.Name.dirty||form.submitted)">required</span>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="Name2">Name 2</label>
+                                            <input name="Name2" type="text" class="form-control" [ngModel]="cityForm.Name2">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="ST_CNT_ID">Country</label>
+                                            <select name="ST_CNT_ID" class="form-control" [ngModel]="cityForm.ST_CNT_ID"
+                                                required>
+                                                <option *ngFor="let country of countries" [ngValue]="country.Id">{{country.Name}}</option>
+                                            </select>
+                                            <span class="help-block" *ngIf="form.controls.ST_CNT_ID&&form.controls.ST_CNT_ID.invalid &&( form.controls.ST_CNT_ID.touched|| form.controls.ST_CNT_ID.dirty||form.submitted)">required</span>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="Refernce_No">Reference No</label>
+                                            <input name="Refernce_No" type="text" class="form-control" [ngModel]="cityForm.Refernce_No">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <label for="Loc_Status">Status</label>
+                                            <select name="Loc_Status" class="form-control" [ngModel]="cityForm.Loc_Status"
+                                                required>
+                                                <option *ngFor="let status of LockUps" [ngValue]="status.Major_Code">{{status.Name}}</option>
+
+                                            </select>
+                                            <span class="help-block" *ngIf="form.controls.Loc_Status&&form.controls.Loc_Status.invalid &&( form.controls.Loc_Status.touched|| form.controls.Loc_Status.dirty||form.submitted)">required</span>
+                                        </div>
+                                        <div class="col-md-8 text-right">
+                                            <br>
+                                            <br>
+                                            <input class="btn btn-primary " type="submit" value="Save" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </fieldset>
                             <div class="mat-elevation-z8">
                                 <div class="html5buttons">
                                     <br>
@@ -272,43 +194,104 @@
                                 </div>
                                 <br>
                                 <mat-form-field>
-                                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                                    <input matInput (keyup)="filtercities($event.target.value)" placeholder="Search">
                                 </mat-form-field>
 
-                                <table mat-table [dataSource]="dataSource">
-
-                                    <!-- Position Column -->
-                                    <ng-container matColumnDef="position">
-                                        <th mat-header-cell *matHeaderCellDef> No. </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                                <table mat-table [dataSource]="citiesDataSource">
+                                    <ng-container matColumnDef="ID">
+                                        <th mat-header-cell *matHeaderCellDef>ID </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.Id}} </td>
                                     </ng-container>
-
-                                    <!-- Name Column -->
-                                    <ng-container matColumnDef="name">
+                                    <ng-container matColumnDef="Name">
                                         <th mat-header-cell *matHeaderCellDef> Name </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                        <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="Name2">
+                                        <th mat-header-cell *matHeaderCellDef> Name2 </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.Name2}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="Country">
+                                        <th mat-header-cell *matHeaderCellDef> Country </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.Country}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="actions">
+                                        <th mat-header-cell *matHeaderCellDef> </th>
+                                        <td mat-cell *matCellDef="let element">
+                                            <i (click)="updateCity(element)" class="fa fa-edit" placement="left"
+                                                ngbTooltip="Edit"></i>
+                                            <i class="fa fa-remove" mwlConfirmationPopover [popoverTitle]="'Confirm'"
+                                                [popoverMessage]="'are you sure to delete?'" placement="left" (confirm)="deleteCity(element.Id)"
+                                                ngbTooltip="Delete"></i>
+                                        </td>
                                     </ng-container>
 
-                                    <!-- Weight Column -->
-                                    <ng-container matColumnDef="weight">
-                                        <th mat-header-cell *matHeaderCellDef> Weight </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-                                    </ng-container>
-
-                                    <!-- Symbol Column -->
-                                    <ng-container matColumnDef="symbol">
-                                        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-                                    </ng-container>
-
-                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                    <tr mat-header-row *matHeaderRowDef="cityTableColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: cityTableColumns;"></tr>
                                 </table>
 
                                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
                             </div>
                         </mat-tab>
                         <mat-tab label="Areas">
+
+                            <fieldset *ngIf="extraForm==='area'" class="animated fadeInDown">
+                                <legend>
+                                    Area
+                                </legend>
+                                <form #form="ngForm" (ngSubmit)="saveArea(form)">
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <label for="Name">Name</label>
+                                            <input name="Name" type="text" class="form-control" [ngModel]="areaForm.Name"
+                                                required>
+                                            <span class="help-block" *ngIf="form.controls.Name&&form.controls.Name.invalid &&( form.controls.Name.touched|| form.controls.Name.dirty||form.submitted)">required</span>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="Name2">Name 2</label>
+                                            <input name="Name2" type="text" class="form-control" [ngModel]="areaForm.Name2">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="country">Country</label>
+                                            <select name="country" class="form-control" [ngModel]="areaForm.country"
+                                                required>
+                                                <option *ngFor="let country of countries" [ngValue]="country.Id">{{country.Name}}</option>
+
+                                            </select>
+                                            <span class="help-block" *ngIf="form.controls.country&&form.controls.country.invalid &&( form.controls.country.touched|| form.controls.country.dirty||form.submitted)">required</span>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="city">City</label>
+                                            <select name="city" class="form-control" [ngModel]="areaForm.city" required>
+                                                <option *ngFor="let status of LockUps" [ngValue]="status.Major_Code">{{status.Name}}</option>
+
+                                            </select>
+                                            <span class="help-block" *ngIf="form.controls.city&&form.controls.city.invalid &&( form.controls.city.touched|| form.controls.city.dirty||form.submitted)">required</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <label for="Refernce_No">Reference No</label>
+                                            <input name="Refernce_No" type="text" class="form-control" [ngModel]="areaForm.Refernce_No">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="Loc_Status">Status</label>
+                                            <select name="Loc_Status" class="form-control" [ngModel]="areaForm.Loc_Status"
+                                                required>
+                                                <option value="">select</option>
+                                                <option value="4">1</option>
+                                            </select>
+                                            <span class="help-block" *ngIf="form.controls.Loc_Status&&form.controls.Loc_Status.invalid &&( form.controls.Loc_Status.touched|| form.controls.Loc_Status.dirty||form.submitted)">required</span>
+                                        </div>
+                                        <div class="col-md-5 text-right">
+                                            <br>
+                                            <br>
+                                            <input class="btn btn-primary " type="submit" value="Save" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </fieldset>
                             <div class="mat-elevation-z8">
                                 <div class="html5buttons">
                                     <br>
@@ -322,37 +305,42 @@
                                 </div>
                                 <br>
                                 <mat-form-field>
-                                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                                    <input matInput (keyup)="filterAreas($event.target.value)" placeholder="Search">
                                 </mat-form-field>
 
-                                <table mat-table [dataSource]="dataSource">
-
-                                    <!-- Position Column -->
-                                    <ng-container matColumnDef="position">
-                                        <th mat-header-cell *matHeaderCellDef> No. </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                                <table mat-table [dataSource]="areasDataSource">
+                                    <ng-container matColumnDef="ID">
+                                        <th mat-header-cell *matHeaderCellDef>ID </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.Id}} </td>
                                     </ng-container>
-
-                                    <!-- Name Column -->
-                                    <ng-container matColumnDef="name">
+                                    <ng-container matColumnDef="Name">
                                         <th mat-header-cell *matHeaderCellDef> Name </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                        <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
                                     </ng-container>
-
-                                    <!-- Weight Column -->
-                                    <ng-container matColumnDef="weight">
-                                        <th mat-header-cell *matHeaderCellDef> Weight </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                                    <ng-container matColumnDef="Name2">
+                                        <th mat-header-cell *matHeaderCellDef> Name2 </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.Name2}} </td>
                                     </ng-container>
-
-                                    <!-- Symbol Column -->
-                                    <ng-container matColumnDef="symbol">
-                                        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                                    <ng-container matColumnDef="Country">
+                                        <th mat-header-cell *matHeaderCellDef> Country </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.Country}} </td>
                                     </ng-container>
-
-                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                    <ng-container matColumnDef="City">
+                                        <th mat-header-cell *matHeaderCellDef> City </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.City}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="actions">
+                                        <th mat-header-cell *matHeaderCellDef> </th>
+                                        <td mat-cell *matCellDef="let element">
+                                            <i (click)="updateArea(element)" class="fa fa-edit" placement="left"
+                                                ngbTooltip="Edit"></i>
+                                            <i class="fa fa-remove" mwlConfirmationPopover [popoverTitle]="'Confirm'"
+                                                [popoverMessage]="'are you sure to delete?'" placement="left" (confirm)="deleteArea(element.Id)"
+                                                ngbTooltip="Delete"></i>
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="areaTableColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: areaTableColumns;"></tr>
                                 </table>
 
                                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
@@ -360,24 +348,7 @@
                         </mat-tab>
                     </mat-tab-group>
 
-                    <!-- <ngb-tabset>
-                        <ngb-tab title="Countries">
-                            <ng-template ngbTabContent>
-                               
-                            </ng-template>
-                        </ngb-tab>
-                        <ngb-tab title="Cities">
-                            <ng-template ngbTabContent>
 
-         
-
-                            </ng-template>
-                        </ngb-tab>
-                        <ngb-tab title="Areas">
-                            <ng-template ngbTabContent>yyy
-                            </ng-template>
-                        </ngb-tab>
-                    </ngb-tabset> -->
                 </div>
 
 

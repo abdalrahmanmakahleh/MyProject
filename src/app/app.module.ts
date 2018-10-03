@@ -1,3 +1,8 @@
+import { CurrencyResolver } from './_resolvers/currency-reolver.resolver';
+import { Currency } from './models/Currency';
+import { AreaResolver } from './_resolvers/area-reolver.resolver';
+import { CountryResolver } from './_resolvers/country-reolver.resolver';
+import { CityResolver } from './_resolvers/city-reolver.resolver';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -15,6 +20,8 @@ import {AppviewsModule} from './views/appviews/appviews.module';
 // App modules/components
 import {LayoutsModule} from './components/common/layouts/layouts.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LockUpResolver } from './_resolvers/lockup-reolver.resolver';
+
 
 @NgModule({
   declarations: [
@@ -27,9 +34,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LayoutsModule,
     AppviewsModule,
     RouterModule.forRoot(ROUTES),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
+  // tslint:disable-next-line:max-line-length
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy} , LockUpResolver , CityResolver , CountryResolver , AreaResolver , CurrencyResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

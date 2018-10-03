@@ -1,18 +1,20 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {RouterModule} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 
-import {BsDropdownModule} from 'ngx-bootstrap';
+import { BsDropdownModule } from 'ngx-bootstrap';
 
-import {BasicLayoutComponent} from './basicLayout.component';
-import {BlankLayoutComponent} from './blankLayout.component';
-import {TopNavigationLayoutComponent} from './topNavigationlayout.component';
+import { BasicLayoutComponent } from './basicLayout.component';
+import { BlankLayoutComponent } from './blankLayout.component';
+import { TopNavigationLayoutComponent } from './topNavigationlayout.component';
 
-import {NavigationComponent} from './../navigation/navigation.component';
-import {FooterComponent} from './../footer/footer.component';
-import {TopNavbarComponent} from './../topnavbar/topnavbar.component';
-import {TopNavigationNavbarComponent} from './../topnavbar/topnavigationnavbar.component';
-
+import { NavigationComponent } from './../navigation/navigation.component';
+import { FooterComponent } from './../footer/footer.component';
+import { TopNavbarComponent } from './../topnavbar/topnavbar.component';
+import { TopNavigationNavbarComponent } from './../topnavbar/topnavigationnavbar.component';
+import { BlockUIModule } from 'ng-block-ui';
+import { BlockUIHttpModule } from 'ng-block-ui/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,10 @@ import {TopNavigationNavbarComponent} from './../topnavbar/topnavigationnavbar.c
   imports: [
     BrowserModule,
     RouterModule,
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    HttpClientModule, // Import Http Client
+    BlockUIModule.forRoot(), // Import BlockUIModule
+    BlockUIHttpModule.forRoot(), // Import Block UI Http Module
   ],
   exports: [
     FooterComponent,
@@ -40,4 +45,4 @@ import {TopNavigationNavbarComponent} from './../topnavbar/topnavigationnavbar.c
   ],
 })
 
-export class LayoutsModule {}
+export class LayoutsModule { }
