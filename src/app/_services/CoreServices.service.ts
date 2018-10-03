@@ -33,7 +33,7 @@ export class CoreService {
 
   loadAreas(areaId: number = null, cityId: number = null, countryId: number = null, langId: number = null): Observable<Area[]> {
     // tslint:disable-next-line:max-line-length
-    return this.http.get<Area[]>(this.url + '/LoadArea?areaId=' + areaId + '&cityId=' + cityId + '&countryId=' + countryId + '&langId=' + langId);
+    return this.http.get<Area[]>(this.url + '/LoadArea', { params: { areaId: areaId, cityId: cityId, countryId: countryId, langId: langId } , observe: 'response'});
   }
 
   loadCurrencies(): Observable<Currency[]> {
