@@ -2,7 +2,7 @@ import { Country } from './../models/country';
 import { Observable } from 'rxjs';
 import { Currency } from './../models/Currency';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { City } from '../models/City';
 import { Area } from '../models/Area';
@@ -28,12 +28,42 @@ export class CoreService {
   }
 
   loadCities(cityId: number = null, countryId: number = null, langId: number = null): Observable<City[]> {
-    return this.http.get<City[]>(this.url + '/LoadCities?cityId=' + cityId + '&countryId=' + countryId + '&langId=' + langId);
+    let queryString = '?cityId=';
+
+    if (cityId != null) {
+      queryString +=  cityId;
+  }
+  queryString += '&countryId=';
+  if (countryId != null) {
+    queryString += countryId;
+  }
+  queryString += '&langId=';
+    if (langId != null) {
+      queryString +=   langId;
+    }
+    return this.http.get<City[]>(this.url + '/LoadCities' + queryString);
   }
 
   loadAreas(areaId: number = null, cityId: number = null, countryId: number = null, langId: number = null): Observable<Area[]> {
-    // tslint:disable-next-line:max-line-length
-    return this.http.get<Area[]>(this.url + '/LoadArea', { params: { areaId: areaId, cityId: cityId, countryId: countryId, langId: langId } , observe: 'response'});
+    let queryString = '?areaId=';
+
+    if (areaId != null) {
+    queryString += areaId;
+  }
+  queryString += '&cityId=';
+    if (cityId != null) {
+      queryString +=  cityId;
+  }
+  queryString += '&countryId=';
+  if (countryId != null) {
+    queryString +=  cityId;
+  }
+  queryString += '&langId=';
+    if (langId != null) {
+      queryString += langId;
+    }
+// tslint:disable-next-line:max-line-length
+    return this.http.get<Area[]>(this.url + '/LoadArea' + queryString);
   }
 
   loadCurrencies(): Observable<Currency[]> {

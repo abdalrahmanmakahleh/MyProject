@@ -28,71 +28,6 @@
 
             <div class="tabs-container">
                 <div class="panel-body">
-                    <ngb-tabset>
-                        <ngb-tab title="Countries">
-                            <ng-template ngbTabContent>
-                                <fieldset>
-                                    <form #form="ngForm" (ngSubmit)="save(form)">
-                                        <div class="row">
-
-                                            <div class="form-group col-md-3">
-                                                <label for="Name">Name</label>
-                                                <input name="Name" type="text" class="form-control" [ngModel]="Name"
-                                                    required>
-                                                <span class="help-block" *ngIf="form.controls.Name&&form.controls.Name.invalid &&( form.controls.Name.touched|| form.controls.Name.dirty||form.submitted)">required</span>
-                                            </div>
-
-
-                                            <div class="form-group col-md-3">
-                                                <label for="Name2">Name 2</label>
-                                                <input name="Name2" type="text" class="form-control" [ngModel]="Name2">
-                                            </div>
-
-                                            <div class="form-group col-md-3">
-                                                <label for="Nationality">Nationality</label>
-                                                <input name="Nationality" type="text" class="form-control" [ngModel]="Nationality">
-                                            </div>
-
-                                            <div class="form-group col-md-3">
-                                                <label for="ST_CUR_COD">Currency Code</label>
-                                                <input name="ST_CUR_COD" type="text" class="form-control" [ngModel]="ST_CUR_COD">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-md-3">
-                                                <label for="Refernce_No">Reference No</label>
-                                                <input name="Refernce_No" type="text" class="form-control" [ngModel]="Refernce_No">
-                                            </div>
-
-                                            <div class="form-group col-md-3">
-                                                <label for="Loc_Status">Status</label>
-                                                <select name="Loc_Status" class="form-control" [ngModel]="Loc_Status"
-                                                    required>
-                                                    <option value="">select</option>
-                                                    <option value="4">1</option>
-                                                </select>
-                                                <span class="help-block" *ngIf="form.controls.Loc_Status&&form.controls.Loc_Status.invalid &&( form.controls.Loc_Status.touched|| form.controls.Loc_Status.dirty||form.submitted)">required</span>
-                                            </div>
-
-                                            <div class="form-group col-md-3">
-                                                <label for="Phone_Code">Phone Code</label>
-                                                <input name="Phone_Code" type="text" class="form-control" [ngModel]="Phone_Code">
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-md-4">
-                                                <label for="countryFlag">Country Flag</label>
-                                                <input name="countryFlag" type="file" class="form-control"
-                                                    ng2FileSelect [uploader]="uploader">
-                                            </div>
-                                        </div>
-
-
-                                        <input class="btn btn-primary pull-right" type="submit" value="Save" required />
-
-                                    </form>
-                                </fieldset>
 
                     <fieldset>
                         <legend>
@@ -317,20 +252,20 @@
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="country">Country</label>
-                                            <select name="country" class="form-control" [ngModel]="areaForm.country"
+                                            <select name="ST_CNT_ID" class="form-control" [ngModel]="areaForm.country"
                                                 required>
                                                 <option *ngFor="let country of countries" [ngValue]="country.Id">{{country.Name}}</option>
 
                                             </select>
-                                            <span class="help-block" *ngIf="form.controls.country&&form.controls.country.invalid &&( form.controls.country.touched|| form.controls.country.dirty||form.submitted)">required</span>
+                                            <span class="help-block" *ngIf="form.controls.ST_CNT_ID&&form.controls.ST_CNT_ID.invalid &&( form.controls.ST_CNT_ID.touched|| form.controls.ST_CNT_ID.dirty||form.submitted)">required</span>
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="city">City</label>
-                                            <select name="city" class="form-control" [ngModel]="areaForm.city" required>
-                                                <option *ngFor="let status of LockUps" [ngValue]="status.Major_Code">{{status.Name}}</option>
+                                            <label for="ST_CTY_ID">City</label>
+                                            <select name="ST_CTY_ID" class="form-control" [ngModel]="areaForm.city" required>
+                                                <option *ngFor="let city of cities" [ngValue]="city.Id">{{city.Name}}</option>
 
                                             </select>
-                                            <span class="help-block" *ngIf="form.controls.city&&form.controls.city.invalid &&( form.controls.city.touched|| form.controls.city.dirty||form.submitted)">required</span>
+                                            <span class="help-block" *ngIf="form.controls.ST_CTY_ID&&form.controls.ST_CTY_ID.invalid &&( form.controls.ST_CTY_ID.touched|| form.controls.ST_CTY_ID.dirty||form.submitted)">required</span>
                                         </div>
 
                                     </div>
@@ -344,8 +279,7 @@
                                             <label for="Loc_Status">Status</label>
                                             <select name="Loc_Status" class="form-control" [ngModel]="areaForm.Loc_Status"
                                                 required>
-                                                <option value="">select</option>
-                                                <option value="4">1</option>
+                                                <option *ngFor="let status of LockUps" [ngValue]="status.Major_Code">{{status.Name}}</option>
                                             </select>
                                             <span class="help-block" *ngIf="form.controls.Loc_Status&&form.controls.Loc_Status.invalid &&( form.controls.Loc_Status.touched|| form.controls.Loc_Status.dirty||form.submitted)">required</span>
                                         </div>

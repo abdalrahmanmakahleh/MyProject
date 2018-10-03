@@ -5,9 +5,9 @@ export class Area {
 
     Name2: string;
 
-    Country: string;
+    ST_CNT_ID: string;
 
-    City: string;
+    ST_CTY_ID: string;
 
     Refernce_No: string;
 

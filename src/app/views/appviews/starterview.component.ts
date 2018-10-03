@@ -79,7 +79,7 @@ export class StarterViewComponent implements OnInit {
 
     this.coreService.loadCountries();
 
-    this.coreService.loadCities().subscribe(data => {
+    this.coreService.loadCities(null , 1).subscribe(data => {
       this.cities = data;
     });
     this.coreService.loadAreas().subscribe(data => {
@@ -212,8 +212,8 @@ export class StarterViewComponent implements OnInit {
   updateArea(area: Area) {
     this.areaForm.Name = area.Name;
     this.areaForm.Name2 = area.Name2;
-    this.areaForm.City = area.City;
-    this.areaForm.Country = area.Country;
+    this.areaForm.ST_CTY_ID = area.ST_CNT_ID;
+    this.areaForm.ST_CNT_ID = area.ST_CNT_ID;
     this.areaForm.Refernce_No = area.Refernce_No;
     this.areaForm.Loc_Status = area.Loc_Status;
 
