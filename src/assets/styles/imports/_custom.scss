@@ -68,5 +68,32 @@ table {
 
 
 td.mat-cell.cdk-column-actions.mat-column-actions{
-  text-align: right;
+  text-align: center;
+}
+
+.mat-elevation-z8 .extra-form{
+  background-color: #e6e6e6;
+  padding-bottom: 2em;
+}
+
+.mat-column-select {
+  width: 5em;
+}
+
+tr.mat-header-row {
+  height: 35px!important;
+  background-color: #e6e6e661;
+}
+
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.input-group-addon {
+  padding: 2px 12px;
 }

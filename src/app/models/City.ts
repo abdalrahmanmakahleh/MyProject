@@ -11,4 +11,5 @@ export class City {
 
     Loc_Status: number;
 
+    selected: boolean;
 }

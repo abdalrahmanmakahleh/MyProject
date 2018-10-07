@@ -6,6 +6,7 @@ import { StarterViewComponent } from './views/appviews/starterview.component';
 import { LoginComponent } from './views/appviews/login.component';
 import { BlankLayoutComponent } from './components/common/layouts/blankLayout.component';
 import { BasicLayoutComponent } from './components/common/layouts/basicLayout.component';
+import { CurrencyResolver } from './_resolvers/currency-reolver.resolver';
 
 export const ROUTES: Routes = [
   // Main redirect
@@ -25,7 +26,8 @@ export const ROUTES: Routes = [
         path: 'starterview', component: StarterViewComponent,
         resolve: {
           lockUp: LockUpResolver,
-          country: CountryResolver
+          country: CountryResolver,
+          currencies: CurrencyResolver
         }
       }
     ]

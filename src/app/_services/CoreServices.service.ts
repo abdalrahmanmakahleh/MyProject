@@ -27,19 +27,19 @@ export class CoreService {
     return this.http.get<Country[]>(this.url + '/LoadCountries');
   }
 
-  loadCities(cityId: number = null, countryId: number = null, langId: number = null): Observable<City[]> {
+  loadCities(countryId: number = null, cityId: number = null, langId: number = null): Observable<City[]> {
     let queryString = '?cityId=';
 
     if (cityId != null) {
-      queryString +=  cityId;
-  }
-  queryString += '&countryId=';
-  if (countryId != null) {
-    queryString += countryId;
-  }
-  queryString += '&langId=';
+      queryString += cityId;
+    }
+    queryString += '&countryId=';
+    if (countryId != null) {
+      queryString += countryId;
+    }
+    queryString += '&langId=';
     if (langId != null) {
-      queryString +=   langId;
+      queryString += langId;
     }
     return this.http.get<City[]>(this.url + '/LoadCities' + queryString);
   }
@@ -48,21 +48,21 @@ export class CoreService {
     let queryString = '?areaId=';
 
     if (areaId != null) {
-    queryString += areaId;
-  }
-  queryString += '&cityId=';
+      queryString += areaId;
+    }
+    queryString += '&cityId=';
     if (cityId != null) {
-      queryString +=  cityId;
-  }
-  queryString += '&countryId=';
-  if (countryId != null) {
-    queryString +=  cityId;
-  }
-  queryString += '&langId=';
+      queryString += cityId;
+    }
+    queryString += '&countryId=';
+    if (countryId != null) {
+      queryString += countryId;
+    }
+    queryString += '&langId=';
     if (langId != null) {
       queryString += langId;
     }
-// tslint:disable-next-line:max-line-length
+    // tslint:disable-next-line:max-line-length
     return this.http.get<Area[]>(this.url + '/LoadArea' + queryString);
   }
 

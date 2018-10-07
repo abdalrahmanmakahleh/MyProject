@@ -16,4 +16,6 @@ export class Country {
   Phone_Code: number;
 
   Flag: string;
+
+  selected: boolean;
 }

@@ -1,3 +1,4 @@
+import { Currency } from './../../models/Currency';
 import { LockUp } from './../../models/LockUp';
 import { CoreService } from './../../_services/CoreServices.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -26,12 +27,17 @@ export class StarterViewComponent implements OnInit {
   areaForm: Area;
   areas: Area[];
   LockUps: LockUp[];
+  currencies: Currency[];
 
-  cityTableColumns: string[] = ['ID', 'Name', 'Name2', 'Country', 'actions'];
+  countryTableColumns: string[] = ['select', 'ID', 'Name', 'Name2', 'Nationality', 'Currency code', 'Phone code', 'actions'];
+  countriesDataSource = new MatTableDataSource<Country>();
+
+  cityTableColumns: string[] = ['select', 'ID', 'Name', 'Name2', 'Country', 'actions'];
   citiesDataSource = new MatTableDataSource<City>();
 
-  areaTableColumns: string[] = ['ID', 'Name', 'Name2', 'Country', 'City', 'actions'];
+  areaTableColumns: string[] = ['select', 'ID', 'Name', 'Name2', 'Country', 'City', 'actions'];
   areasDataSource = new MatTableDataSource<Area>();
+
 
   urlLoad: string;
   uploader: FileUploader;
@@ -53,21 +59,18 @@ export class StarterViewComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.countries = data.country;
       this.LockUps = data.lockUp;
+      this.currencies = data.currencies;
     });
 
-    this.citiesDataSource.paginator = this.paginator;
-    this.areasDataSource.paginator = this.paginator;
 
+    this.countriesDataSource = new MatTableDataSource<Country>(this.countries);
     this.citiesDataSource = new MatTableDataSource<City>(this.cities);
     this.areasDataSource = new MatTableDataSource<Area>(this.areas);
 
+    this.countriesDataSource.paginator = this.paginator;
+    this.citiesDataSource.paginator = this.paginator;
+    this.areasDataSource.paginator = this.paginator;
 
-
-    this.cityForm.Name = 'Amman';
-    this.cities = [this.cityForm];
-
-    this.areaForm.Name = 'Gardens';
-    this.areas = [this.areaForm];
 
     this.uploader = new FileUploader({
       url: this.url + '/AddCountryFlag',
@@ -77,20 +80,36 @@ export class StarterViewComponent implements OnInit {
       autoUpload: false
     });
 
-    this.coreService.loadCountries();
-
-    this.coreService.loadCities(null , 1).subscribe(data => {
-      this.cities = data;
-    });
-    this.coreService.loadAreas().subscribe(data => {
-      this.areas = data;
-    });
 
   }
 
 
   showCityAreaForm($event) {
+
     this.extraForm = $event.index === 1 ? 'city' : ($event.index === 2 ? 'area' : '');
+
+    if (this.extraForm === 'city') {
+      this.coreService.loadCities(this.countryForm.Id ? this.countryForm.Id : null, null, 1).subscribe(data => {
+        this.cities = data;
+        this.citiesDataSource = new MatTableDataSource<City>(this.cities);
+        this.cityForm.ST_CNT_ID = this.countryForm.Id;
+      });
+    } else if (this.extraForm === 'area') {
+      // tslint:disable-next-line:max-line-length
+      this.coreService.loadAreas(null, this.cityForm.Id ? this.cityForm.Id : null, this.cityForm.ST_CNT_ID ? this.cityForm.ST_CNT_ID : null, 1).subscribe(data => {
+        this.areas = data;
+        this.areasDataSource = new MatTableDataSource<Area>(this.areas);
+        this.areaForm.ST_CTY_ID = this.cityForm.Id;
+        this.areaForm.ST_CNT_ID = this.cityForm.ST_CNT_ID;
+
+      });
+
+    }
+
+  }
+
+  filterCountries(filterValue: string) {
+    this.countriesDataSource.filter = filterValue.trim().toLowerCase();
   }
 
   filtercities(filterValue: string) {
@@ -123,24 +142,34 @@ export class StarterViewComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    this.countryForm = Object.assign({}, form.value);
+    this.countryForm = this.countryForm.selected ? this.countryForm : Object.assign({}, form.value);
     this.countryForm.Loc_Status = Number(this.countryForm.Loc_Status);
     if (this.uploader.queue.length > 0) {
       this.UploadFlag();
     } else {
-      this.http.post(this.url + '/InsertCountry', this.countryForm).subscribe(res => {
-        this.coreService.loadCountries();
+      this.http.post(this.url + (this.countryForm.selected ? '/UpdateCountry' : '/InsertCountry'), this.countryForm).subscribe(res => {
+        this.coreService.loadCountries().subscribe(data => {
+          this.countries = data;
+          this.countriesDataSource = new MatTableDataSource<Country>(this.countries);
+          this.countryForm = new Country;
+          form.resetForm();
+        });
       });
     }
   }
 
   deleteCountry(id) {
     this.http.delete(this.url + '/DeleteCountry?countryId=' + id).subscribe(res => {
-      this.coreService.loadCountries();
+      this.coreService.loadCountries().subscribe(data => {
+        this.countries = data;
+        this.countriesDataSource = new MatTableDataSource<Country>(this.countries);
+      });
     });
   }
 
   updateCountry(country: Country) {
+    this.countryForm = new Country;
+    this.countryForm.Id = country.Id;
     this.countryForm.Name = country.Name;
     this.countryForm.Name2 = country.Name2;
     this.countryForm.Nationality = country.Nationality;
@@ -148,11 +177,7 @@ export class StarterViewComponent implements OnInit {
     this.countryForm.Refernce_No = country.Refernce_No;
     this.countryForm.Loc_Status = country.Loc_Status;
     this.countryForm.Phone_Code = country.Phone_Code;
-
-    // this.http.post(this.url + '/UpdateCountry', country).subscribe(res => {
-    //   alert(res);
-    //   this.loadCountries();
-    // });
+    this.countryForm.selected = country.selected;
   }
 
 
@@ -160,11 +185,14 @@ export class StarterViewComponent implements OnInit {
 
   saveCity(form) {
     if (form.invalid) { return; }
-    this.cityForm = Object.assign({}, form.value);
+    this.cityForm = this.cityForm.selected ? this.cityForm : Object.assign({}, form.value);
     this.cityForm.Loc_Status = Number(this.cityForm.Loc_Status);
-    this.http.post(this.url + '/InsertCity', this.cityForm).subscribe(res => {
-      this.coreService.loadCities().subscribe(data => {
+    this.http.post(this.url + (this.cityForm.selected ? '/UpdateCity' : '/InsertCity'), this.cityForm).subscribe(res => {
+      this.coreService.loadCities(this.countryForm.Id ? this.countryForm.Id : null, null, 1).subscribe(data => {
         this.cities = data;
+        this.citiesDataSource = new MatTableDataSource<City>(this.cities);
+        this.cityForm = new City;
+        form.resetForm();
       });
     });
 
@@ -172,21 +200,32 @@ export class StarterViewComponent implements OnInit {
 
   deleteCity(id) {
     this.http.delete(this.url + '/DeleteCity?cityId=' + id).subscribe(res => {
-      this.coreService.loadCountries();
+      this.coreService.loadCities(this.countryForm.Id ? this.countryForm.Id : null, null, 1).subscribe(data => {
+        this.cities = data;
+        this.citiesDataSource = new MatTableDataSource<City>(this.cities);
+      });
     });
   }
 
+  loadCities() {
+    this.coreService.loadCities(this.areaForm.ST_CNT_ID ? this.areaForm.ST_CNT_ID : null, null, 1).subscribe(data => {
+      this.cities = data;
+      this.areaForm.ST_CTY_ID = null;
+    });
+  }
+
+
+
   updateCity(city: City) {
+    this.cityForm = new City;
+
+    this.cityForm.Id = city.Id;
     this.cityForm.Name = city.Name;
     this.cityForm.Name2 = city.Name2;
-
+    this.cityForm.ST_CNT_ID = city.ST_CNT_ID;
     this.cityForm.Refernce_No = city.Refernce_No;
     this.cityForm.Loc_Status = city.Loc_Status;
-
-    // this.http.post(this.url + '/UpdateCountry', country).subscribe(res => {
-    //   alert(res);
-    //   this.loadCountries();
-    // });
+    this.cityForm.selected = city.selected;
   }
 
 
@@ -196,31 +235,43 @@ export class StarterViewComponent implements OnInit {
 
   saveArea(form) {
     if (form.invalid) { return; }
-    this.areaForm = Object.assign({}, form.value);
+
+    this.areaForm = this.areaForm.selected ? this.areaForm : Object.assign({}, form.value);
+
     this.areaForm.Loc_Status = Number(this.areaForm.Loc_Status);
-    this.http.post(this.url + '/InsertArea', this.areaForm).subscribe(res => {
-      this.coreService.loadAreas();
+    this.http.post(this.url + (this.areaForm.selected ? '/UpdateArea' : '/InsertArea'), this.areaForm).subscribe(res => {
+      // tslint:disable-next-line:max-line-length
+      this.coreService.loadAreas(null, this.cityForm.Id ? this.cityForm.Id : null, this.cityForm.ST_CNT_ID ? this.cityForm.ST_CNT_ID : null, 1).subscribe(data => {
+        this.areas = data;
+        this.areasDataSource = new MatTableDataSource<Area>(this.areas);
+        this.areaForm = new Area;
+        form.resetForm();
+      });
+
     });
   }
 
   deleteArea(id) {
     this.http.delete(this.url + '/DeleteArea?areaId=' + id).subscribe(res => {
-      this.coreService.loadAreas();
+      // tslint:disable-next-line:max-line-length
+      this.coreService.loadAreas(null, this.cityForm.Id ? this.cityForm.Id : null, this.cityForm.ST_CNT_ID ? this.cityForm.ST_CNT_ID : null, 1).subscribe(data => {
+        this.areas = data;
+        this.areasDataSource = new MatTableDataSource<Area>(this.areas);
+      });
     });
   }
 
   updateArea(area: Area) {
+    this.areaForm = new Area;
+
+    this.areaForm.Id = area.Id;
     this.areaForm.Name = area.Name;
     this.areaForm.Name2 = area.Name2;
-    this.areaForm.ST_CTY_ID = area.ST_CNT_ID;
+    this.areaForm.ST_CTY_ID = area.ST_CTY_ID;
     this.areaForm.ST_CNT_ID = area.ST_CNT_ID;
     this.areaForm.Refernce_No = area.Refernce_No;
     this.areaForm.Loc_Status = area.Loc_Status;
-
-    // this.http.post(this.url + '/UpdateCountry', country).subscribe(res => {
-    //   alert(res);
-    //   this.loadCountries();
-    // });
+    this.areaForm.selected = true;
   }
 
 
