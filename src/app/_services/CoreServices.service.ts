@@ -75,8 +75,8 @@ export class CoreService {
     return this.http.get<LockUp[]>(this.url + '/LoadLockUpsByMajorCode?ID=' + majorCode);
   }
 
-  ExportToPdf(array: Array<Object>, fileName: string, Type: string): Observable<[]> {
-    return this.http.post<[]>(this.utilitiesURl + '/ExportToPdf?fileName=' + fileName + '&Type=' + Type, {'countries': array});
+  ExportToPdf(array: Array<Object>, fileName: string, Type: string): Observable<Object[]> {
+    return this.http.post<Object[]>(this.utilitiesURl + '/ExportToPdf?fileName=' + fileName + '&Type=' + Type, {'countries': array});
   }
 
 }
