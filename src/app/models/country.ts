@@ -18,4 +18,5 @@ export class Country {
   Flag: string;
 
   selected: boolean;
+
 }

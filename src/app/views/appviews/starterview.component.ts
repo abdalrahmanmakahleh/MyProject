@@ -1,3 +1,4 @@
+import { City } from './../../models/City';
 import { Currency } from './../../models/Currency';
 import { LockUp } from './../../models/LockUp';
 import { CoreService } from './../../_services/CoreServices.service';
@@ -5,7 +6,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { HttpClient } from '@angular/common/http';
 import { Country } from '../../models/country';
-import { City } from '../../models/City';
 import { Area } from '../../models/Area';
 import { environment } from '../../../environments/environment';
 import { Subject } from 'rxjs';
@@ -60,6 +60,7 @@ export class StarterViewComponent implements OnInit {
       this.countries = data.country;
       this.LockUps = data.lockUp;
       this.currencies = data.currencies;
+      // this.ExportToPdf(this.countries);
     });
 
 
@@ -121,14 +122,19 @@ export class StarterViewComponent implements OnInit {
   }
 
 
-  UploadFlag() {
+  UploadFlag(form) {
     this.uploader.uploadAll();
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       if (response) {
         this.filePath = response;
         this.countryForm.Flag = response;
-        this.http.post(this.url + '/InsertCountry', this.countryForm).subscribe(res => {
-          this.coreService.loadCountries();
+        this.http.post(this.url + (this.countryForm.selected ? '/UpdateCountry' : '/InsertCountry'), this.countryForm).subscribe(res => {
+          this.coreService.loadCountries().subscribe(data => {
+            this.countries = data;
+            this.countriesDataSource = new MatTableDataSource<Country>(this.countries);
+            this.countryForm = new Country;
+            form.resetForm();
+          });
         });
       }
     };
@@ -145,7 +151,7 @@ export class StarterViewComponent implements OnInit {
     this.countryForm = this.countryForm.selected ? this.countryForm : Object.assign({}, form.value);
     this.countryForm.Loc_Status = Number(this.countryForm.Loc_Status);
     if (this.uploader.queue.length > 0) {
-      this.UploadFlag();
+      this.UploadFlag(form);
     } else {
       this.http.post(this.url + (this.countryForm.selected ? '/UpdateCountry' : '/InsertCountry'), this.countryForm).subscribe(res => {
         this.coreService.loadCountries().subscribe(data => {
@@ -215,7 +221,6 @@ export class StarterViewComponent implements OnInit {
   }
 
 
-
   updateCity(city: City) {
     this.cityForm = new City;
 
@@ -274,6 +279,16 @@ export class StarterViewComponent implements OnInit {
     this.areaForm.selected = true;
   }
 
+
+  replaceFileName(fileName) {
+    return fileName ? fileName.replace('http://demo20180914093247.azurewebsites.net/Flags/', '') : '';
+  }
+
+  ExportToPdf(objects: Object[]) {
+    this.coreService.ExportToPdf(objects, 'cities', 'country').subscribe(data => {
+     console.log(data);
+    });
+  }
 
 }
 

@@ -12,6 +12,7 @@ import { LockUp } from '../models/LockUp';
 })
 export class CoreService {
   url: string = environment.azureUrl + 'core';
+  utilitiesURl: string = environment.azureUrl + 'Utilites';
   countries: Country[];
   cityForm: City;
   cities: City[];
@@ -74,5 +75,10 @@ export class CoreService {
     return this.http.get<LockUp[]>(this.url + '/LoadLockUpsByMajorCode?ID=' + majorCode);
   }
 
+  ExportToPdf(array: Array<Object>, fileName: string, Type: string): Observable<[]> {
+    return this.http.post<[]>(this.utilitiesURl + '/ExportToPdf?fileName=' + fileName + '&Type=' + Type, {'countries': array});
+  }
 
 }
+
+

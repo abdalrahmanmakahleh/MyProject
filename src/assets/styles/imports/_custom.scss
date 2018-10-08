@@ -97,3 +97,12 @@ input[type="file"] {
 .input-group-addon {
   padding: 2px 12px;
 }
+
+.mat-row:nth-child(even) {
+  background-color: #f6f6f6;
+  height: 2.5em;
+}
+
+.mat-row:nth-child(odd){
+  //background-color:#b1cfc9;
+  }
